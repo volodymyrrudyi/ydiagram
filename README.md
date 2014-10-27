@@ -1,4 +1,4 @@
 ydiagram
 ========
 
-Visualisation tool for impex files
+Visualization tool for impex files
