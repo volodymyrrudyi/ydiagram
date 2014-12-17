@@ -1,0 +1,58 @@
+/*
+    Copyright 2014 Volodymyr Rudyi
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+ */
+package com.rvcode.ydiagram;
+
+import com.intellij.diagram.*;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.xml.XmlDocument;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+public class YDiagramProvider extends BaseDiagramProvider<XmlDocument> {
+
+    private static final String PROCES_DIAGRAM_PRESENTABLE_NAME = "Process Diagram";
+    public static final String ID = "ProcessDiagramProvider";
+
+    private final DiagramVfsResolver<XmlDocument> vfsResolver = new YDiagramResolver();
+    private final YDiagramElementManager diagramElementManager = new YDiagramElementManager();
+
+    @Override
+    public String getID() {
+        return ID;
+    }
+
+    @Override
+    public DiagramElementManager<XmlDocument> getElementManager() {
+        return diagramElementManager;
+    }
+
+    @Override
+    public DiagramVfsResolver<XmlDocument> getVfsResolver() {
+        return vfsResolver;
+    }
+
+    @Override
+    public String getPresentableName() {
+        return PROCES_DIAGRAM_PRESENTABLE_NAME;
+    }
+
+    @Override
+    public DiagramDataModel<XmlDocument> createDataModel(@NotNull Project project, @Nullable XmlDocument xmlDocument, @Nullable VirtualFile virtualFile, DiagramPresentationModel diagramPresentationModel) {
+        return new YDiagramDataModel(project, this, xmlDocument);
+    }
+}
